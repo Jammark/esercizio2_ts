@@ -7,28 +7,40 @@ class BankAccount {
     descrizione() {
         return 'Conto corrente di ' + this.ownerName;
     }
-    deposit(amount) {
+    oneDeposit(amount) {
         this.totalBalance += amount;
         console.log(`Depositati ${amount} euro.`);
+        return this.totalBalance;
     }
-    withdraw(amount) {
+    oneWithdraw(amount) {
         this.totalBalance -= amount;
         console.log(`Ritirati ${amount} euro.`);
     }
+    twoDeposit(amount) {
+        return this.oneDeposit(amount);
+    }
+    twoWithdraw(amount) {
+        this.oneWithdraw(amount);
+    }
+    addInterest() {
+        return Math.trunc(this.totalBalance / 10) + this.totalBalance;
+    }
     saldo() {
-        return `Il saldo corrente è di ${Math.trunc(this.totalBalance / 10) + this.totalBalance} euro.`;
+        return `Il saldo corrente è di ${this.addInterest()} euro.`;
     }
 }
 BankAccount.balanceInit = 0;
 let accountMother = new BankAccount('Maria');
 let accountSon = new BankAccount('Fabio');
 console.log(accountMother.descrizione());
-accountMother.deposit(1000);
-accountMother.withdraw(200);
-accountMother.withdraw(400);
+accountMother.oneDeposit(1000);
+accountMother.oneWithdraw(200);
+accountMother.twoDeposit(300);
+accountMother.twoWithdraw(400);
 console.log(accountMother.saldo());
 console.log(accountSon.descrizione());
-accountSon.deposit(1000);
-accountSon.withdraw(500);
-accountSon.withdraw(300);
+accountSon.oneDeposit(1000);
+accountSon.oneWithdraw(500);
+accountSon.twoDeposit(300);
+accountSon.twoWithdraw(300);
 console.log(accountSon.saldo());
